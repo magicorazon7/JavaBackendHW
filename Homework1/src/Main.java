@@ -16,9 +16,9 @@ public class Main {
             arrayTest = randomWithRange(arrayTest,writeScan,nArray);
             int arrayMaxVal = findMax(arrayTest);
             int arrayMinVal = findMin(arrayTest);
-            int arrayAver = findAverage(arrayTest);
-            int[] sortArrAsc = ascendedSortArr(arrayTest);
-            int[] sortArrDesc = descendingSortArr(arrayTest);
+            double arrayAver = findAverage(arrayTest);
+            int[] sortArrAsc = sortAscending(arrayTest);
+            int[] sortArrDesc = sortDescending(arrayTest);
 
             System.out.println("Max: " + arrayMaxVal);
             System.out.println("Min: " + arrayMinVal);
@@ -33,8 +33,8 @@ public class Main {
             double arrayMaxVal = findMax(arrayTest);
             double arrayMinVal = findMin(arrayTest);
             double arrayAver = findAverage(arrayTest);
-            double[] sortArrAsc = ascendedSortArr(arrayTest);
-            double[] sortArrDesc = descendingSortArr(arrayTest);
+            double[] sortArrAsc = sortAscending(arrayTest);
+            double[] sortArrDesc = sortDescending(arrayTest);
 
             System.out.println("Max: " + arrayMaxVal);
             System.out.println("Min: " + arrayMinVal);
@@ -128,10 +128,10 @@ public class Main {
         return average/array.length;
     }
 
-    static int findAverage(int[] array) {
+    static double findAverage(int[] array) {
         int average = 0;
         for (int j : array) {average += j;}
-        return average/array.length;
+        return (double)average/array.length;
     }
 
     static int getArraySize(Scanner scan) {
@@ -147,7 +147,7 @@ public class Main {
         return size;
     }
 
-    static int[] ascendedSortArr(int[] array) {
+    static int[] sortAscending(int[] array) {
         int length = array.length;
         int[] arrCopy = Arrays.copyOf(array, length);
 
@@ -163,7 +163,7 @@ public class Main {
         return arrCopy;
     }
 
-    static double[] ascendedSortArr(double[] array) {
+    static double[] sortAscending(double[] array) {
         int length = array.length;
         double[] arrCopy = Arrays.copyOf(array, length);
 
@@ -179,7 +179,7 @@ public class Main {
         return arrCopy;
     }
 
-    static int[] descendingSortArr(int[] array) {
+    static int[] sortDescending(int[] array) {
         int length = array.length;
         int[] arrCopy = Arrays.copyOf(array, length);
 
@@ -195,7 +195,7 @@ public class Main {
         return arrCopy;
     }
 
-    static double[] descendingSortArr(double[] array) {
+    static double[] sortDescending(double[] array) {
         int length = array.length;
         double[] arrCopy = Arrays.copyOf(array, length);
 
