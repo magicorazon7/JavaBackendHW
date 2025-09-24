@@ -4,50 +4,50 @@ import java.util.Arrays;
 public class Main {
     public static void main(String[] args) {
         Scanner writeScan = new Scanner(System.in);
-        functions func = new functions();
         int isIntegerArray = 1;
 
-        int nArray = func.getArraySize(writeScan);
+        int nArray = getArraySize(writeScan);
         System.out.print("Выберите тип данных в массиве: 1 - целочисленные, 0 - дробные числа ");
         isIntegerArray = writeScan.nextInt();
         //small test
         if (isIntegerArray == 1) {
 
-            int[] arr = new int[nArray];
-            arr = func.randomWithRange(arr,writeScan,nArray);
-            int arrayMaxVal = func.findMax(arr);
-            int arrayMinVal = func.findMin(arr);
-            int arrayAver = func.findAverage(arr);
-            int[] sortArr = func.ascendedSortArr(arr);
+            int[] arrayTest = new int[nArray];
+            arrayTest = randomWithRange(arrayTest,writeScan,nArray);
+            int arrayMaxVal = findMax(arrayTest);
+            int arrayMinVal = findMin(arrayTest);
+            int arrayAver = findAverage(arrayTest);
+            int[] sortArrAsc = ascendedSortArr(arrayTest);
+            int[] sortArrDesc = descendingSortArr(arrayTest);
 
             System.out.println("Max: " + arrayMaxVal);
             System.out.println("Min: " + arrayMinVal);
             System.out.println("Average: " + arrayAver);
-            System.out.println("Sorted ascending: " + Arrays.toString(sortArr));
+            System.out.println("Sorted ascending (Ascending): " + Arrays.toString(sortArrAsc));
+            System.out.println("Sorted ascending (Descending): " + Arrays.toString(sortArrDesc));
 
         } else {
 
-            double[] arr = new double[nArray];
-            arr = func.randomWithRange(arr,writeScan,nArray);
-            double arrayMaxVal = func.findMax(arr);
-            double arrayMinVal = func.findMin(arr);
-            double arrayAver = func.findAverage(arr);
-            double[] sortArr = func.ascendedSortArr(arr);
+            double[] arrayTest = new double[nArray];
+            arrayTest = randomWithRange(arrayTest,writeScan,nArray);
+            double arrayMaxVal = findMax(arrayTest);
+            double arrayMinVal = findMin(arrayTest);
+            double arrayAver = findAverage(arrayTest);
+            double[] sortArrAsc = ascendedSortArr(arrayTest);
+            double[] sortArrDesc = descendingSortArr(arrayTest);
 
             System.out.println("Max: " + arrayMaxVal);
             System.out.println("Min: " + arrayMinVal);
             System.out.println("Average: " + arrayAver);
-            System.out.println("Sorted ascending: " + Arrays.toString(sortArr));
+            System.out.println("Sorted ascending (Ascending): " + Arrays.toString(sortArrAsc));
+            System.out.println("Sorted ascending (Descending): " + Arrays.toString(sortArrDesc));
 
         }
 
     }
-}
 
-
-class functions{
-
-    double[] randomWithRange(double[] arr, Scanner scanner, int size) {
+    static  double[] randomWithRange(double[] array, Scanner scanner, int size) {
+        double[] arrCopy = Arrays.copyOf(array, array.length);
         double max;
         double min;
         System.out.println("Введите максимальное допустимое значение случайного числа ");
@@ -57,13 +57,14 @@ class functions{
         double range = max - min;
 
         for(int i = 0; i < size; ++i) {
-            arr[i] = Math.random() * range + min;
+            arrCopy[i] = Math.random() * range + min;
         }
 
-        return arr;
+        return arrCopy;
     }
 
-    int[] randomWithRange(int[] arr, Scanner scanner, int size) {
+    static int[] randomWithRange(int[] array, Scanner scanner, int size) {
+        int[] arrCopy = Arrays.copyOf(array, array.length);
         int max;
         int min;
         System.out.println("Введите максимальное допустимое значение случайного числа ");
@@ -73,13 +74,13 @@ class functions{
         int range = max - min + 1;
 
         for(int i = 0; i < size; ++i) {
-            arr[i] = (int)(Math.random() * range) + min;
+            arrCopy[i] = (int)(Math.random() * range) + min;
         }
 
-        return arr;
+        return arrCopy;
     }
 
-    double findMax(double[] array) {
+    static double findMax(double[] array) {
         double max = array[0];
         for (int i = 1; i < array.length; ++i) {
             if (array[i] > max) {
@@ -89,7 +90,7 @@ class functions{
         return max;
     }
 
-    int findMax(int[] array) {
+    static int findMax(int[] array) {
         int max = array[0];
         for (int i = 1; i < array.length; ++i) {
             if (array[i] > max) {
@@ -99,7 +100,7 @@ class functions{
         return max;
     }
 
-    double findMin(double[] array) {
+    static double findMin(double[] array) {
         double min = array[0];
         for (int i = 1; i < array.length; ++i) {
             if (array[i] < min) {
@@ -109,7 +110,7 @@ class functions{
         return min;
     }
 
-    int findMin(int[] array) {
+    static int findMin(int[] array) {
         int min = array[0];
 
         for (int i = 1; i < array.length; ++i) {
@@ -121,19 +122,19 @@ class functions{
         return min;
     }
 
-    double findAverage(double[] array) {
+    static double findAverage(double[] array) {
         double average = 0;
         for (double v : array) {average += v;}
         return average/array.length;
     }
 
-    int findAverage(int[] array) {
+    static int findAverage(int[] array) {
         int average = 0;
         for (int j : array) {average += j;}
         return average/array.length;
     }
 
-    int getArraySize(Scanner scan) {
+    static int getArraySize(Scanner scan) {
         int size;
         do {
             System.out.print("Введите размер массива (больше 0): ");
@@ -146,55 +147,69 @@ class functions{
         return size;
     }
 
-    int[] ascendedSortArr(int[] array) {
-        for (int i = 0; i < array.length - 1; i++) {
-            for (int j = 1; j < array.length - i; j++) {
-                if (array[j] < array[j - 1]) {
-                    int tmp = array[j];
-                    array[j] = array[j - 1];
-                    array[j - 1] = tmp;
+    static int[] ascendedSortArr(int[] array) {
+        int length = array.length;
+        int[] arrCopy = Arrays.copyOf(array, length);
+
+        for (int i = 0; i < arrCopy.length - 1; i++) {
+            for (int j = 1; j < arrCopy.length - i; j++) {
+                if (arrCopy[j] < arrCopy[j - 1]) {
+                    int tmp = arrCopy[j];
+                    arrCopy[j] = arrCopy[j - 1];
+                    arrCopy[j - 1] = tmp;
                 }
             }
         }
-        return array;
+        return arrCopy;
     }
 
-    double[] ascendedSortArr(double[] array) {
-        for (int i = 0; i < array.length - 1; i++) {
-            for (int j = 1; j < array.length - i; j++) {
-                if (array[j] < array[j - 1]) {
-                    double tmp = array[j];
-                    array[j] = array[j - 1];
-                    array[j - 1] = tmp;
+    static double[] ascendedSortArr(double[] array) {
+        int length = array.length;
+        double[] arrCopy = Arrays.copyOf(array, length);
+
+        for (int i = 0; i < length - 1; i++) {
+            for (int j = 1; j < length - i; j++) {
+                if (arrCopy[j] < arrCopy[j - 1]) {
+                    double tmp = arrCopy[j];
+                    arrCopy[j] = arrCopy[j - 1];
+                    arrCopy[j - 1] = tmp;
                 }
             }
         }
-        return array;
+        return arrCopy;
     }
 
-    int[] descendingSortArr(int[] array) {
-        for (int i = 0; i < array.length - 1; i++) {
-            for (int j = 1; j < array.length - i; j++) {
-                if (array[j] > array[j - 1]) {
-                    int tmp = array[j];
-                    array[j] = array[j - 1];
-                    array[j - 1] = tmp;
+    static int[] descendingSortArr(int[] array) {
+        int length = array.length;
+        int[] arrCopy = Arrays.copyOf(array, length);
+
+        for (int i = 0; i < length - 1; i++) {
+            for (int j = 1; j < length - i; j++) {
+                if (arrCopy[j] > arrCopy[j - 1]) {
+                    int tmp = arrCopy[j];
+                    arrCopy[j] = arrCopy[j - 1];
+                    arrCopy[j - 1] = tmp;
                 }
             }
         }
-        return array;
+        return arrCopy;
     }
 
-    double[] descendingSortArr(double[] array) {
-        for (int i = 0; i < array.length - 1; i++) {
-            for (int j = 1; j < array.length - i; j++) {
-                if (array[j] > array[j - 1]) {
-                    double tmp = array[j];
-                    array[j] = array[j - 1];
-                    array[j - 1] = tmp;
+    static double[] descendingSortArr(double[] array) {
+        int length = array.length;
+        double[] arrCopy = Arrays.copyOf(array, length);
+
+        for (int i = 0; i < length - 1; i++) {
+            for (int j = 1; j < length - i; j++) {
+                if (arrCopy[j] > arrCopy[j - 1]) {
+                    double tmp = arrCopy[j];
+                    arrCopy[j] = arrCopy[j - 1];
+                    arrCopy[j - 1] = tmp;
                 }
             }
         }
-        return array;
+        return arrCopy;
     }
 }
+
+
