@@ -1,34 +1,27 @@
 public abstract class Vehicle {
 
-    public Vehicle(String name, FuelType fuel, TransportCategory category, EngineType engine){
+    public Vehicle(String name, int maxSpeed, FuelType fuel, TransportCategory category){
         this.name = name;
         this.fuelType = fuel;
-        this.engineType = engine;
         this.transportCategory = category;
+        this.maxSpeed = maxSpeed;
     }
 
     public enum FuelType {
         gasoline,
-        diesel,
         electric,
-        coal,
         none;
     }
+
     public enum TransportCategory {
         land,
         air,
         water
     }
-    public enum EngineType {
-        internalCombustion,
-        jet,
-        electric,
-        non
-    }
 
     private final FuelType fuelType;
-    private final EngineType engineType;
     private final TransportCategory transportCategory;
+    private final int maxSpeed;
     private final String name;
 
     public String start() {
@@ -37,9 +30,11 @@ public abstract class Vehicle {
 
     public String getInfo() {
         return "Vehicle name: " + name + "\n" +"Transport type: " + transportCategory +
-                "\n" + "Fuel type: " + fuelType + "Engine type: "  + "\n" + engineType;
+                "\n" + "Fuel type: " + fuelType;
     }
 
-    public abstract int getMaxSpeed();
+    public String getMaxSpeed() {
+        return "Vehicle " + name + " has maximum speed of "+ maxSpeed +" km/h";
+    }
 }
 
