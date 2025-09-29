@@ -1,4 +1,4 @@
-public abstract sealed class Vehicle permits GasCar, ElectricCar, FigherJet, Ship, Motorcycle {
+public abstract sealed class Vehicle implements Movable permits GasCar, ElectricCar, FigherJet, Ship, Motorcycle {
 
     public Vehicle(String name, int maxSpeed, FuelType fuel, TransportCategory category){
         this.name = name;
@@ -21,22 +21,18 @@ public abstract sealed class Vehicle permits GasCar, ElectricCar, FigherJet, Shi
         water
     }
 
-    private final FuelType fuelType;
-    private final TransportCategory transportCategory;
-    private final int maxSpeed;
-    private final String name;
+    public final FuelType fuelType;
+    public final TransportCategory transportCategory;
+    public final int maxSpeed;
+    public final String name;
 
-    public String start() {
-        return "Vehicle " + name + " started";
+    public void getInfo() {
+        System.out.println("Vehicle name: " + name + "\n" +"Transport type: " + transportCategory +
+                "\n" + "Fuel type: " + fuelType);
     }
 
-    public String getInfo() {
-        return "Vehicle name: " + name + "\n" +"Transport type: " + transportCategory +
-                "\n" + "Fuel type: " + fuelType;
-    }
-
-    public String getMaxSpeed() {
-        return "Vehicle " + name + " has maximum speed of "+ maxSpeed +" km/h";
+    public void getMaxSpeed() {
+        System.out.println("Vehicle " + name + " has maximum speed of "+ maxSpeed +" km/h");
     }
 }
 
