@@ -1,4 +1,4 @@
-public abstract class Vehicle {
+public abstract sealed class Vehicle permits GasCar, ElectricCar, FigherJet, Ship, Motorcycle {
 
     public Vehicle(String name, int maxSpeed, FuelType fuel, TransportCategory category){
         this.name = name;
@@ -10,6 +10,8 @@ public abstract class Vehicle {
     public enum FuelType {
         gasoline,
         electric,
+        diesel,
+        jet,
         none;
     }
 
