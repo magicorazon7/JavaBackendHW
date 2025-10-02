@@ -28,6 +28,7 @@ public class Main {
         suJet.startMotion();
         suJet.endMotion();
         suJet.getMaxSpeed();
+        suJet.doPugachevsCobra();
 
         GasCar jeep = new GasCar("Land Cruiser Prado",160);
         jeep.getInfo();
@@ -35,5 +36,6 @@ public class Main {
         jeep.startMotion();
         jeep.endMotion();
         jeep.getMaxSpeed();
+        jeep.charli();
     }
 }

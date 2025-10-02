@@ -17,4 +17,6 @@ public final class GasCar extends Vehicle {
     public void endMotion() {
         System.out.println("Car stopped moving!");
     }
+
+    public void charli(){System.out.println("Vroom Vroom!");};
 }

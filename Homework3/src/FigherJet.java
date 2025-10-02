@@ -17,4 +17,9 @@ public final class FigherJet extends Vehicle {
     public void endMotion() {
         System.out.println("Fighter jet's landing gear is down!");
     }
+
+    public void doPugachevsCobra() {
+        System.out.println("Plane's AOA is 90 degrees!!!");
+    }
+
 }
