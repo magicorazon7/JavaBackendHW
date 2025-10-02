@@ -22,7 +22,7 @@ public class Main {
         DemyanBedniy.endMotion();
         DemyanBedniy.getMaxSpeed();
 
-        FigherJet suJet = new FigherJet("SU-27M",2400);
+        FighterJet suJet = new FighterJet("SU-27M",2400);
         suJet.getInfo();
         suJet.startEngine();
         suJet.startMotion();

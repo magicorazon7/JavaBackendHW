@@ -1,5 +1,5 @@
-public final class FigherJet extends Vehicle {
-    public FigherJet(String name, int maxSpeed) {
+public final class FighterJet extends Vehicle {
+    public FighterJet(String name, int maxSpeed) {
         super(name, maxSpeed, FuelType.jet, TransportCategory.air);
     }
 

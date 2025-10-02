@@ -1,4 +1,4 @@
-public abstract sealed class Vehicle implements Movable permits GasCar, ElectricCar, FigherJet, Ship, Motorcycle {
+public abstract sealed class Vehicle implements Movable permits GasCar, ElectricCar, FighterJet, Ship, Motorcycle {
 
     public Vehicle(String name, int maxSpeed, FuelType fuel, TransportCategory category){
         this.name = name;
