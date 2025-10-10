@@ -7,7 +7,12 @@ public final class ElectricCar extends Vehicle {
     public void startEngine() {
         System.out.println("Electric drive is booted up!");
     }
-
+    
+    @Override
+    public void stopEngine() {
+    
+    }
+    
     @Override
     public void startMotion() {
         System.out.println("Electric car is accelerating!");

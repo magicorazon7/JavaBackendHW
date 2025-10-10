@@ -7,7 +7,12 @@ public final class GasCar extends Vehicle {
     public void startEngine() {
         System.out.println("Car's engine started!");
     }
-
+    
+    @Override
+    public void stopEngine() {
+    
+    }
+    
     @Override
     public void startMotion() {
         System.out.println("Car is accelerating!");

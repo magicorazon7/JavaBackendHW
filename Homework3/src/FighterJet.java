@@ -7,7 +7,12 @@ public final class FighterJet extends Vehicle {
     public void startEngine() {
         System.out.println("Fighter jet's engines are running and heated, ready for flight!");
     }
-
+    
+    @Override
+    public void stopEngine() {
+    
+    }
+    
     @Override
     public void startMotion() {
         System.out.println("Fighter jet's increases altitude!");

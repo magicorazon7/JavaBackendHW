@@ -7,7 +7,12 @@ public final class Ship extends Vehicle {
     public void startEngine() {
         System.out.println("Ship's engines are running!");
     }
-
+    
+    @Override
+    public void stopEngine() {
+    
+    }
+    
     @Override
     public void startMotion() {
         System.out.println("Ship's leaving a harbor!");

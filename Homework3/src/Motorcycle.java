@@ -7,7 +7,12 @@ public final class Motorcycle extends Vehicle {
     public void startEngine() {
         System.out.println("Motorcycle's engine started!");
     }
-
+    
+    @Override
+    public void stopEngine() {
+    
+    }
+    
     @Override
     public void startMotion() {
         System.out.println("Motorcycle's accelerating!");
