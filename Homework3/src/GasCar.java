@@ -1,6 +1,8 @@
-public final class GasCar extends Vehicle {
+import java.util.List;
+
+public final class GasCar extends Vehicle implements HasEngine {
     public GasCar (String name, int maxSpeed){
-        super(name, maxSpeed, FuelType.gasoline, TransportCategory.land);
+        super(name, maxSpeed, List.of(new GasolineFuel()), TransportCategory.land);
     }
 
     @Override

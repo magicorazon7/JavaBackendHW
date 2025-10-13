@@ -1,6 +1,8 @@
-public final class Motorcycle extends Vehicle {
+import java.util.List;
+
+public final class Motorcycle extends Vehicle implements HasEngine {
     public Motorcycle(String name, int maxSpeed) {
-        super(name, maxSpeed, FuelType.gasoline, TransportCategory.land);
+        super(name, maxSpeed, List.of(new GasolineFuel()), TransportCategory.land);
     }
 
     @Override

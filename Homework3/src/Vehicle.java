@@ -1,27 +1,21 @@
-public abstract sealed class Vehicle implements Movable,HasEngine permits GasCar, ElectricCar, FighterJet, Ship, Motorcycle {
+import java.util.List;
 
-    public Vehicle(String name, int maxSpeed, FuelType fuel, TransportCategory category){
+public abstract class Vehicle implements Movable {
+
+    public Vehicle(String name, int maxSpeed, List<Fuel> fuels, TransportCategory category){
         this.name = name;
-        this.fuelType = fuel;
+        this.fuelTypes = List.copyOf(fuels);
         this.transportCategory = category;
         this.maxSpeed = maxSpeed;
     }
-
-    public enum FuelType {
-        gasoline,
-        electric,
-        diesel,
-        jet,
-        none;
-    }
-
+    
     public enum TransportCategory {
         land,
         air,
         water
     }
-
-    public final FuelType fuelType;
+    
+    public final List<Fuel> fuelTypes;
     public final TransportCategory transportCategory;
     public final int maxSpeed;
     public final String name;

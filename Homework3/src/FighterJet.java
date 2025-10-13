@@ -1,6 +1,8 @@
-public final class FighterJet extends Vehicle {
+import java.util.List;
+
+public final class FighterJet extends Vehicle implements HasEngine {
     public FighterJet(String name, int maxSpeed) {
-        super(name, maxSpeed, FuelType.jet, TransportCategory.air);
+        super(name, maxSpeed, List.of(new JetFuel()), TransportCategory.air);
     }
 
     @Override
