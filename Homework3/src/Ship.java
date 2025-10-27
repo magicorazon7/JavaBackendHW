@@ -1,13 +1,20 @@
-public final class Ship extends Vehicle {
+import java.util.List;
+
+public final class Ship extends Vehicle implements HasEngine {
     public Ship(String name, int maxSpeed) {
-        super(name, maxSpeed, FuelType.diesel, TransportCategory.water);
+        super(name, maxSpeed, List.of(new DieselFuel()), TransportCategory.water);
     }
 
     @Override
     public void startEngine() {
         System.out.println("Ship's engines are running!");
     }
-
+    
+    @Override
+    public void stopEngine() {
+    
+    }
+    
     @Override
     public void startMotion() {
         System.out.println("Ship's leaving a harbor!");

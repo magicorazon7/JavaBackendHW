@@ -1,14 +1,13 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
         Scanner writeScan = new Scanner(System.in);
-        int isIntegerArray = 1;
-
+        int isIntegerArray = getDataType(writeScan);
         int nArray = getArraySize(writeScan);
-        System.out.print("Выберите тип данных в массиве: 1 - целочисленные, 0 - дробные числа ");
-        isIntegerArray = writeScan.nextInt();
+        
         //small test
         if (isIntegerArray == 1) {
 
@@ -47,13 +46,28 @@ public class Main {
     }
 
     static  double[] randomWithRange(double[] array, Scanner scanner, int size) {
-        double[] arrCopy = Arrays.copyOf(array, array.length);
-        double max;
-        double min;
-        System.out.println("Введите максимальное допустимое значение случайного числа ");
-        max = scanner.nextDouble();
-        System.out.println("Введите минимальное допустимое значение случайного числа ");
-        min = scanner.nextDouble();
+        double max, min;
+        while (true) {
+            try {
+                System.out.println("Введите максимальное допустимое значение случайного числа ");
+                max = scanner.nextDouble();
+                System.out.println("Введите минимальное допустимое значение случайного числа ");
+                min = scanner.nextDouble();
+                
+                if (min >= max) {
+                    throw new IllegalArgumentException("Минимальное значение должно быть меньше максимального!");
+                }
+                break;
+            } catch (InputMismatchException e) {
+                System.err.println("Ошибка! Введите числовое значение.");
+                scanner.nextLine();
+            } catch (IllegalArgumentException e) {
+                System.err.println(e.getMessage());
+                scanner.nextLine();
+            }
+        }
+       
+        double[] arrCopy =  new double[size];
         double range = max - min;
 
         for(int i = 0; i < size; ++i) {
@@ -64,13 +78,30 @@ public class Main {
     }
 
     static int[] randomWithRange(int[] array, Scanner scanner, int size) {
-        int[] arrCopy = Arrays.copyOf(array, array.length);
-        int max;
-        int min;
-        System.out.println("Введите максимальное допустимое значение случайного числа ");
-        max = scanner.nextInt();
-        System.out.println("Введите минимальное допустимое значение случайного числа ");
-        min = scanner.nextInt();
+        int max, min;
+        
+        while (true) {
+            try {
+                System.out.println("Введите максимальное допустимое значение случайного числа ");
+                max = scanner.nextInt();
+                System.out.println("Введите минимальное допустимое значение случайного числа ");
+                min = scanner.nextInt();
+                
+                if (min >= max) {
+                    throw new IllegalArgumentException("Минимальное значение должно быть меньше максимального!");
+                }
+                break;
+            } catch (InputMismatchException e) {
+                System.err.println("Ошибка! Введите числовое значение.");
+                scanner.nextLine();
+            } catch (IllegalArgumentException e) {
+                System.err.println(e.getMessage());
+                scanner.nextLine();
+            }
+        }
+        
+        
+        int[] arrCopy =  new int[size];
         int range = max - min + 1;
 
         for(int i = 0; i < size; ++i) {
@@ -133,18 +164,24 @@ public class Main {
         for (int j : array) {average += j;}
         return (double)average/array.length;
     }
-
+    
     static int getArraySize(Scanner scan) {
-        int size;
-        do {
-            System.out.print("Введите размер массива (больше 0): ");
-            size = scan.nextInt();
-            if (size <= 0) {
-                System.out.println("Ошибка! Размер массива должен быть больше 0.");
+        while (true) {
+            try {
+                System.out.println("Введите размер массива (больше 0): ");
+                int size = scan.nextInt();
+                if (size <= 0) {
+                    throw new IllegalArgumentException("Размер массива не может быть меньше или равен нулю!");
+                }
+                return size;
+            } catch (InputMismatchException e) {
+                System.err.println("Ошибка! Недопустимый тип переменной, введите целое число");
+                scan.nextLine();
+            } catch (IllegalArgumentException e) {
+                System.err.println(e.getMessage());
+                scan.nextLine();
             }
-        } while (size <= 0);
-
-        return size;
+        }
     }
 
     static int[] sortAscending(int[] array) {
@@ -209,6 +246,25 @@ public class Main {
             }
         }
         return arrCopy;
+    }
+    
+    static int getDataType(Scanner scan) {
+        while (true) {
+            try {
+                System.out.println("Выберите тип данных в массиве: 1 - целочисленные, 0 - дробные числа ");
+                int choice = scan.nextInt();
+                if (choice != 0 && choice != 1) {
+                    throw new IllegalArgumentException("Выберите либо 1, либо 0!");
+                }
+                return choice;
+            } catch (InputMismatchException e) {
+                System.err.println("Ошибка! Недопустимый тип переменной, введите целое число");
+                scan.nextLine();
+            } catch (IllegalArgumentException e) {
+                System.err.println(e.getMessage());
+                scan.nextLine();
+            }
+        }
     }
 }
 
