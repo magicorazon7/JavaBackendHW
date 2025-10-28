@@ -13,23 +13,24 @@ public class Cashier extends Thread {
     public void run() {
       while (running) {
         try {
-          Runnable transaction = bank.takeTransaction();
+          Transaction t = bank.takeTransaction();
           bank.notifyObservers("Cashier " + id + " processing transaction");
-          transaction.run();
+          processTransaction(t);
           
         } catch (InterruptedException e) {
-          break;
+            Thread.currentThread().interrupt();
+            break;
         }
       }
     }
     
-    public synchronized void deposit(int clientId, double amount) {
+    public void deposit(int clientId, double amount) {
       double balance = bank.getClient(clientId).getBalance();
       balance += amount;
       bank.getClient(clientId).setBalance(balance);
     }
   
-    public synchronized boolean withdraw(int clientId, double amount) {
+    public boolean withdraw(int clientId, double amount) {
       double balance = bank.getClient(clientId).getBalance();
       if (balance >= amount) {
       balance -= amount;
@@ -42,7 +43,7 @@ public class Cashier extends Thread {
     }
     
     
-    public synchronized void exchangeCurrency(int clientId, Currency from, Currency to, double amount) {
+    public void exchangeCurrency(int clientId, Currency from, Currency to, double amount) {
           Client client = bank.getClient(clientId);
           if (client == null) {
               bank.notifyObservers("Operation failed: no such client " + clientId);
@@ -52,7 +53,7 @@ public class Cashier extends Thread {
               bank.notifyObservers("Operation failed: client " + clientId + " doesn't possess " + from);
               return;
           }
-          if (withdraw(clientId, amount)) {
+          if (!withdraw(clientId, amount)) {
               bank.notifyObservers("Operation failed: insufficient funds " + clientId);
               return;
           }
@@ -63,20 +64,30 @@ public class Cashier extends Thread {
           deposit(clientId,converted);
           
       }
-      
-      
+
+
     public synchronized void transferFunds(int senderId, int receiverId, double amount) {
-          Client sender = bank.getClient(senderId);
-          Client receiver = bank.getClient(receiverId);
+        Client sender = bank.getClient(senderId);
+        Client receiver = bank.getClient(receiverId);
 
-          if (sender == null || receiver == null) {
-              bank.notifyObservers("Operation failed: invalid ID");
-          }
-          
-          if (withdraw(senderId,amount)) {
-              bank.notifyObservers("Operation failed: insufficient funds " + senderId);
-          }
+        synchronized (sender) { // блокируем и сендера и ресивера
+            synchronized (receiver) {
+                if (!withdraw(senderId, amount)) {
+                    bank.notifyObservers("Transfer failed: insufficient funds " + senderId);
+                    return;
+                }
+                deposit(receiverId, amount);
+                bank.notifyObservers("Transfer completed: " + senderId + " -> " + receiverId);
+            }
+        }
       }
-      
 
+    private void processTransaction(Transaction t) {
+        switch (t.type) {
+            case DEPOSIT -> deposit(t.clientId, t.amount);
+            case WITHDRAW -> withdraw(t.clientId, t.amount);
+            case EXCHANGE -> exchangeCurrency(t.clientId, t.from, t.to, t.amount);
+            case TRANSFER -> transferFunds(t.clientId, t.receiverId, t.amount);
+        }
+    }
 }

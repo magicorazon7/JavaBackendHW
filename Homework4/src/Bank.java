@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
 
@@ -6,7 +5,7 @@ public class Bank {
     
     private final ConcurrentHashMap<Integer, Client> clients = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<Currency, Double> exchangeRates = new ConcurrentHashMap<>();
-    private final BlockingQueue<Runnable> transactionQueue = new LinkedBlockingQueue<>();
+    private final BlockingQueue<Transaction> transactionQueue = new LinkedBlockingQueue<>();
     private final List<Cashier> cashiers = new CopyOnWriteArrayList<>();
     private List<Observer> observers = new CopyOnWriteArrayList<>();
 
@@ -14,7 +13,7 @@ public class Bank {
         initializeExchangeRates();
         ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(1);
         executor.scheduleAtFixedRate(() -> {updateExchangeRates();},
-        0, 10, TimeUnit.SECONDS);
+        0, 5, TimeUnit.SECONDS);
         
         for (int i = 0; i < numberOfCashiers; i++) {
             Cashier cashier = new Cashier(i, this);
@@ -25,11 +24,11 @@ public class Bank {
         addObserver(new Logger());
     }
     
-    public void submitTransaction(Runnable transaction) {
+    public void submitTransaction(Transaction transaction) {
         transactionQueue.offer(transaction);
     }
     
-    public Runnable takeTransaction() throws InterruptedException {
+    public Transaction takeTransaction() throws InterruptedException {
         return transactionQueue.take();
     }
     
