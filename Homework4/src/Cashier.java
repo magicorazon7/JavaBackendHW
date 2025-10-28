@@ -20,12 +20,12 @@ public class Cashier extends Thread {
                     processTransaction(t);
                 } catch (Exception ex) {
                     bank.notifyObservers("Cashier " + id + " failed transaction: " + ex.getMessage());
-                    ex.printStackTrace(); // optional: log full stack
+                    ex.printStackTrace();
                 }
 
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
-                break; // graceful shutdown
+                break;
             }
         }
     }
@@ -81,21 +81,27 @@ public class Cashier extends Thread {
     
     
     public void exchangeCurrency(int clientId, Currency from, Currency to) {
-          Client client = bank.getClient(clientId);
-          if (client == null) {
+        Client client = bank.getClient(clientId);
+
+        if (client.getBalance() <= 0) {
+            bank.notifyObservers("Currency exchange failed: insufficient funds ");
+            return;
+        }
+
+        if (client == null) {
               bank.notifyObservers("Operation failed: no such client " + clientId);
               return;
-          }
-          if (!client.getCurrency().equals(from)) {
+        }
+        if (!client.getCurrency().equals(from)) {
               bank.notifyObservers("Operation failed: client " + clientId + " doesn't possess " + from);
               return;
-          }
+        }
 
-          double fromRate = bank.getExchangeRate(from);
-          double toRate = bank.getExchangeRate(to);
-          double converted = client.getBalance() * (toRate / fromRate);
-          deposit(clientId,converted);
-          client.setCurrency(to);
+        double fromRate = bank.getExchangeRate(from);
+        double toRate = bank.getExchangeRate(to);
+        double converted = client.getBalance() * (toRate / fromRate);
+        deposit(clientId,converted);
+        client.setCurrency(to);
           
       }
 
@@ -104,6 +110,10 @@ public class Cashier extends Thread {
         Client sender = bank.getClient(senderId);
         Client receiver = bank.getClient(receiverId);
 
+        if (sender == null|receiver == null) {
+            bank.notifyObservers("Operation failed: invalid clients");
+            return;
+        }
 
         synchronized (sender) { // блокируем и сендера и ресивера
             synchronized (receiver) {
