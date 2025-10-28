@@ -1,5 +1,5 @@
 public enum Currency {
-    USD, EUR, GBP, JPY, RUB;
+    USD, EUR, RUB;
 
     // optional helper if you want exchange pairs or display names
     public static Currency fromString(String name) {
