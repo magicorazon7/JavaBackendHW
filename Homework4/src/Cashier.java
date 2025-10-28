@@ -80,7 +80,7 @@ public class Cashier extends Thread {
     }
     
     
-    public void exchangeCurrency(int clientId, Currency from, Currency to, double amount) {
+    public void exchangeCurrency(int clientId, Currency from, Currency to) {
           Client client = bank.getClient(clientId);
           if (client == null) {
               bank.notifyObservers("Operation failed: no such client " + clientId);
@@ -90,14 +90,10 @@ public class Cashier extends Thread {
               bank.notifyObservers("Operation failed: client " + clientId + " doesn't possess " + from);
               return;
           }
-          if (!withdraw(clientId, amount)) {
-              bank.notifyObservers("Operation failed: insufficient funds " + clientId);
-              return;
-          }
 
           double fromRate = bank.getExchangeRate(from);
           double toRate = bank.getExchangeRate(to);
-          double converted = amount * (toRate / fromRate);
+          double converted = client.getBalance() * (toRate / fromRate);
           deposit(clientId,converted);
           client.setCurrency(to);
           
@@ -135,7 +131,7 @@ public class Cashier extends Thread {
         switch (t.type) {
             case DEPOSIT -> deposit(t.clientId, t.amount);
             case WITHDRAW -> withdraw(t.clientId, t.amount);
-            case EXCHANGE -> exchangeCurrency(t.clientId, t.from, t.to, t.amount);
+            case EXCHANGE -> exchangeCurrency(t.clientId, t.from, t.to);
             case TRANSFER -> transferFunds(t.clientId, t.receiverId, t.amount);
         }
     }

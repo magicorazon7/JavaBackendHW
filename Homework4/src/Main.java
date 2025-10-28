@@ -14,7 +14,7 @@ public class Main {
         bank.submitTransaction(new Transaction(Transaction.Type.DEPOSIT, 1, 0, null, null, 200));
         bank.submitTransaction(new Transaction(Transaction.Type.WITHDRAW, 2, 0, null, null, 100));
         bank.submitTransaction(new Transaction(Transaction.Type.TRANSFER, 1, 2, null, null, 150));
-        bank.submitTransaction(new Transaction(Transaction.Type.EXCHANGE, 3, 0, Currency.RUB, Currency.USD, 200));
+        bank.submitTransaction(new Transaction(Transaction.Type.EXCHANGE, 3, 0, Currency.RUB, Currency.USD, 0));
 
         Thread.sleep(10000);
         System.out.println("\nFinal balances:");
