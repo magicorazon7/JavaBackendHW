@@ -1,7 +1,7 @@
 public class Client {
     private final int id;
     private double balance;
-    private final Currency currency;
+    private Currency currency;
 
     public Client(int id, double balance, Currency currency1) {
         this.id = id;
@@ -15,6 +15,7 @@ public class Client {
     }
     
     public int getId() { return id; }
-    public Currency getCurrency() { return currency; }
+    public synchronized Currency getCurrency() { return currency; }
+    public synchronized void setCurrency(Currency currency) {this.currency = currency;}
 
 }

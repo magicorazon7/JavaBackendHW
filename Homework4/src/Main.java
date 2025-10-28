@@ -20,7 +20,6 @@ public class Main {
         System.out.println("\nFinal balances:");
         for (int id = 1; id <= 3; id++) {
             Client c = bank.getClient(id);
-//            System.out.printf("Client %d: %.2f %s%n", c.getId(), c.getBalance(), c.getCurrency());
             System.out.println("Client "+c.getId()+":" + c.getBalance() +" "+c.getCurrency());
         }
 

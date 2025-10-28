@@ -10,6 +10,9 @@ public class Bank {
     private List<Observer> observers = new CopyOnWriteArrayList<>();
 
     public Bank(int numberOfCashiers) {
+        addObserver(new Logger());
+
+
         initializeExchangeRates();
         ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(1);
         executor.scheduleAtFixedRate(() -> {updateExchangeRates();},
@@ -20,11 +23,14 @@ public class Bank {
             cashiers.add(cashier);
             cashier.start();
         }
-        
-        addObserver(new Logger());
+
     }
     
     public void submitTransaction(Transaction transaction) {
+        if (transaction == null) {
+            notifyObservers("Rejected null transaction");
+            return;
+        }
         transactionQueue.offer(transaction);
     }
     
