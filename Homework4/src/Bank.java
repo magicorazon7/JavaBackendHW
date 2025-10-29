@@ -11,8 +11,7 @@ public class Bank {
 
     public Bank(int numberOfCashiers) {
         addObserver(new Logger());
-
-
+        
         initializeExchangeRates();
         ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(1);
         executor.scheduleAtFixedRate(() -> {updateExchangeRates();},
@@ -80,5 +79,9 @@ public class Bank {
             }
         }
         notifyObservers("Rates updated: " + exchangeRates);
+    }
+    
+    public int getNumberOfClients(){
+        return clients.size();
     }
 }
