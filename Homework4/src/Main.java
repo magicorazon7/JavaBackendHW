@@ -7,7 +7,7 @@ public class Main {
 
         // Довольные пользователи Алмазэргиенбанка
         bank.addClient(new Client(1, 1000.0, Currency.USD));
-        bank.addClient(new Client(2, 500.0, Currency.EUR));
+        bank.addClient(new Client(2, 500.0, Currency.USD));
         bank.addClient(new Client(3, 800.0, Currency.RUB));
 
         // Добавить в очередь операции

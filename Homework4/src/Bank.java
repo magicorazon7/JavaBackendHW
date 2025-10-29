@@ -46,10 +46,6 @@ public class Bank {
         return clients.get(id);
     }
     
-    // работа с валютой
-    public void setExchangeRate(Currency currency, double rate) {
-        exchangeRates.put(currency, rate);
-    }
     public double getExchangeRate(Currency currency) {
         return exchangeRates.getOrDefault(currency, 1.0);
     }
