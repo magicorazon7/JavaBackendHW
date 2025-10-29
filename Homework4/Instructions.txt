@@ -1,0 +1,39 @@
+Инструкция по работе с банковской системой
+
+Запуск системы:
+Bank bank = new Bank(2); // Создать банк с указанием количества кассиров
+
+Добавление клиентов:
+bank.addClient(new Client(1, 1000.0, Currency.USD)); // ID, начальный баланс, валюта
+
+Типы операций:
+
+1. Пополнение счета:
+   new Transaction(Transaction.Type.DEPOSIT, clientId, 0, null, null, amount)
+
+2. Снятие средств:
+   new Transaction(Transaction.Type.WITHDRAW, clientId, 0, null, null, amount)
+
+3. Перевод между клиентами:
+   new Transaction(Transaction.Type.TRANSFER, senderId, receiverId, null, null, amount)
+
+4. Обмен валюты (ВНИМАНИЕ! Доступен только обмен всех средств на счету клиента):
+   new Transaction(Transaction.Type.EXCHANGE, clientId, 0, fromCurrency, toCurrency, 0)
+
+Создание операций в банке:
+bank.submitTransaction(transaction);
+
+Проверка результатов:
+Client client = bank.getClient(id);
+double balance = client.getBalance();
+Currency currency = client.getCurrency();
+
+Особенности системы:
+- Курсы валют автоматически обновляются каждые 5 секунд
+- Операции обрабатываются асинхронно несколькими кассирами
+- Все действия логируются с временными метками и соответствующими описаниями операций
+- Обеспечена потокобезопасность операций
+
+Доступные валюты: USD, EUR, RUB
+
+Пример использования доступен в классе Main.

@@ -17,8 +17,9 @@ public class Main {
         bank.submitTransaction(new Transaction(Transaction.Type.WITHDRAW, 2, 0, null, null, 100));
         bank.submitTransaction(new Transaction(Transaction.Type.TRANSFER, 1, 2, null, null, 150));
         bank.submitTransaction(new Transaction(Transaction.Type.EXCHANGE, 3, 0, Currency.RUB, Currency.USD, 0));
-
+        
         Thread.sleep(10000);
+        // Результаты проведенных операций: баланс счета клиентов
         System.out.println("\nFinal balances:");
         for (int id = 1; id <= bank.getNumberOfClients(); id++) {
             Client c = bank.getClient(id);
