@@ -3,10 +3,10 @@ import java.util.concurrent.*;
 
 public class Bank {
     
-    private final ConcurrentHashMap<Integer, Client> clients = new ConcurrentHashMap<>();
-    private final ConcurrentHashMap<Currency, Double> exchangeRates = new ConcurrentHashMap<>();
-    private final BlockingQueue<Transaction> transactionQueue = new LinkedBlockingQueue<>();
-    private final List<Cashier> cashiers = new CopyOnWriteArrayList<>();
+    private final ConcurrentHashMap<Integer, Client> clients = new ConcurrentHashMap<>(); // concurrent хэш карты позволяют нескольким потоком работать одновременно
+    private final ConcurrentHashMap<Currency, Double> exchangeRates = new ConcurrentHashMap<>(); // если использовать обычный хэш мап то при предоставлении доступа двум потоком выкинется ConcurrentModificationException
+    private final BlockingQueue<Transaction> transactionQueue = new LinkedBlockingQueue<>(); // позволяет блокировать (wait) потоки при пустой или полной очереди
+    private final List<Cashier> cashiers = new CopyOnWriteArrayList<>(); //copyonwrite позволяет читать элементы и записывать при параллельной работе потоков, т.е. когда один читает другой может записывать
     private List<Observer> observers = new CopyOnWriteArrayList<>();
 
     public Bank(int numberOfCashiers) {
