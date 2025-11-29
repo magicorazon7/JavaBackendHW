@@ -27,7 +27,8 @@ public class TaskGroup {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true) // ставим в орфане тру чтоб удалились
+    //задачи связанные с удаляемой группой
     private List<Task> tasks;
 
     @CreationTimestamp
