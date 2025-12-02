@@ -9,6 +9,7 @@ com\finaltask\repository\UserRepository.class
 com\finaltask\service\UserService.class
 com\finaltask\service\TaskGroupService.class
 com\finaltask\model\User.class
+com\finaltask\config\OpenApiConfig.class
 com\finaltask\security\JwtRequestFilter.class
 com\finaltask\model\User$UserBuilder.class
 com\finaltask\repository\TaskRepository.class
